@@ -42,13 +42,23 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    
+    permissions:
+      id-token: write #This is required for requesting the JWT
+      contents: read #This is required for actions/checkout
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: ASP-app
       
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_AC3C638ED869414F9A8BF0C46C1C98F3 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_429CE5186A8F4F25BD1B226EA2598C9A }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9994BC6C9D1F48AA8C90A1D5261630E3 }}
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
@@ -56,4 +66,4 @@ jobs:
           app-name: 'kamranwebapp1'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D619A54EA14E49A386FA9BB06E9F88C2 }}
+          
