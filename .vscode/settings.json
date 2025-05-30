@@ -1,0 +1,5 @@
+{
+    "dotnet.defaultSolution": "learningapp.sln",
+    "appService.defaultWebAppToDeploy": "/subscriptions/853baf51-cb83-462c-9f9c-873fa3bd0506/resourceGroups/Test_Kamran_RG1/providers/Microsoft.Web/sites/kamranwebapp1",
+    "appService.deploySubpath": "learningapp\\bin\\Publish"
+}
